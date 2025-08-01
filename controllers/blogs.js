@@ -29,16 +29,18 @@ blogsRouter.post('/', userExtractor, async (request, response, next) => {
   if (blog.title && blog.url && !blog["likes"] ) {
     blog["likes"] = 0;
     const result = await blog.save() 
+    const populatedBlog = await result.populate('users')
     user.blogs = user.blogs.concat(result._id)
     await user.save()
-    return response.status(201).json(result)
+    return response.status(201).json(populatedBlog)
   }
 
   else if (blog.title && blog.url && blog.likes){
     const result = await blog.save() 
+    const populatedBlog = await result.populate('users')
     user.blogs = user.blogs.concat(result._id)
     await user.save()
-    return response.status(201).json(result)
+    return response.status(201).json(populatedBlog)
   }
   else {
     return response.status(400).end()
