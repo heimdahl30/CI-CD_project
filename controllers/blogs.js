@@ -68,6 +68,10 @@ blogsRouter.delete('/:id', userExtractor, async (request, response, next) => {
     console.log("Blog user id", blog.users[0].valueOf())
     if (blog.users[0].valueOf() === user._id.valueOf()){
       await Blog.findByIdAndDelete(request.params.id)
+      user.blogs = user.blogs.filter(
+          (id) => id.valueOf() !== request.params.id
+        );
+        await user.save();
       console.log("Success")
     response.status(204).end()
     }
@@ -100,7 +104,9 @@ blogsRouter.put('/:id', async (request, response, next) => {
 
 
       const updatedBlog = result.save()
-        return response.status(201).json(updatedBlog)
+      const updatedPopulatedBlog = await updatedBlog.populate("users");
+      console.log(updatedPopulatedBlog);
+      return response.status(201).json(updatedPopulatedBlog);
       }
     
     catch (error){
