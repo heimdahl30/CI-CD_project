@@ -1,0 +1,13 @@
+.error{
+ border: 2px solid red;
+background-color: rgb(187, 129, 133);
+height:50px;
+font-size:30px;
+}
+
+.success{
+border: 2px solid green;
+background-color: rgb(73, 173, 123);
+height:50px;
+font-size:30px;
+}
