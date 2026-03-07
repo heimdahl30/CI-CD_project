@@ -16,7 +16,7 @@ on:
 
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 20
     runs-on: ubuntu-latest
 
     steps:
@@ -36,12 +36,30 @@ jobs:
         cache-dependency-path: |
           frontend/package-lock.json
           backend/package-lock.json
+          frontend/playwright_blogtesting/package-lock.json
+
+    - name: Run Backend Unit Tests
+      run: |
+        npm ci
+        npm test
+      working-directory: backend
+      env:
+        MONGODB_URI: mongodb://localhost:27017/test_db
+        PORT: 3003
+        NODE_ENV: test
+
+    # 4. Run Frontend Component Tests
+    - name: Run Frontend Component Tests (Vitest)
+      run: |
+        npm ci
+        npm test -- --watch=false # Ensure Vitest doesn't hang in "watch" mode
+      working-directory: frontend
 
     # 3. Start Backend on port 3003
     - name: Install & Start Backend
       run: |
         npm ci
-        npm start &
+        node src/index.js &
       working-directory: backend
       env:
         PORT: 3003
@@ -66,6 +84,7 @@ jobs:
 
     # 5. Run Playwright Tests
     - name: Run Playwright tests
+      timeout-minutes: 5
       run: npx playwright test
       working-directory: frontend/playwright_blogtesting
       env:
