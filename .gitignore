@@ -1,0 +1,8 @@
+# Root .gitignore
+.DS_Store          # Mac specific junk
+Thumbs.db          # Windows specific junk
+.vscode/           # VS Code settings
+.idea/             # IntelliJ/WebStorm settings
+*.log              # Error logs
+.env               # Environmental variables (safety first!)
+node_modules/      # Just in case you accidentally run npm install at root
