@@ -49,18 +49,25 @@ jobs:
         NODE_ENV: test
 
     # 4. Install Frontend & Browsers
-    - name: Install Frontend
-      run: npm ci
+
+    - name: Install & Start Frontend
+      run: |
+        npm ci
+        npm run dev &
       working-directory: frontend
+
+    - name: Install Playwright dependencies
+      run: npm ci
+      working-directory: frontend/playwright_blogtesting
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-      working-directory: frontend
+      working-directory: frontend/playwright_blogtesting
 
     # 5. Run Playwright Tests
     - name: Run Playwright tests
       run: npx playwright test
-      working-directory: frontend
+      working-directory: frontend/playwright_blogtesting
       env:
         # Playwright will use Vite's default 5173
         PLAYWRIGHT_TEST_BASE_URL: http://localhost:5173
