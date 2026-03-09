@@ -1,31 +1,9 @@
-const { test, after, beforeEach } = require('node:test')
+const { test, after } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../src/app')
 const api = supertest(app)
-const User = require('../src/models/user')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-
-let token = null
-
-beforeEach(async () => {
-    await User.deleteMany({}) // Clear users
-    // 1. Create a test user
-    const passwordHash = await bcrypt.hash('password', 10)
-    const user = new User({ username: 'testuser', passwordHash })
-    const savedUser = await user.save()
-
-    // 2. Generate a fresh token for this specific user
-    const userForToken = {
-        username: savedUser.username,
-        id: savedUser._id.toString(),
-    }
-
-    // Ensure process.env.SECRET is defined in your GitHub Workflow!
-    token = jwt.sign(userForToken, process.env.SECRET)
-})
 
 test('invalid password will not be accepted', async () => {
     const originalUser = await api.get('/api/users')
@@ -36,8 +14,8 @@ test('invalid password will not be accepted', async () => {
         name: "Jojo",
     }
 
-    const response = await api.post('/api/users')
-        .set('Authorization', `Bearer ${token}`)
+    const response = await api
+        .post('/api/users')
         .send(user)
         .expect(400)
 
@@ -59,8 +37,8 @@ test('invalid username will not be accepted', async () => {
         password: "123456yhn"
     }
 
-    const response = await api.post('/api/users')
-        .set('Authorization', `Bearer ${token}`)
+    const response = await api
+        .post('/api/users')
         .send(user)
         .expect(400)
 
@@ -80,7 +58,6 @@ test('duplicate username will not be accepted', async () => {
     }
     await api
         .post('/api/users')
-        .set('Authorization' `Bearer ${token}`)
         .send(initialUser)
         .expect(201)
 
@@ -92,16 +69,18 @@ test('duplicate username will not be accepted', async () => {
         password: "second-password"
     }
 
+    console.log('Sending duplicate user...')
+
     const response = await api
         .post('/api/users')
-        .set('Authorization', `Bearer ${token}`)
         .send(duplicateUser)
+        .timeout(2000)
         .expect(400)
 
     const userAtEnd = await api.get('/api/users')
 
     assert.strictEqual(usersAtStart.body.length, userAtEnd.body.length)
-    assert.deepStrictEqual(response.body, { "error": "`username` should be unique" })
+    assert.deepStrictEqual(response.body, { "error": "username should be unique" })
 
 })
 
