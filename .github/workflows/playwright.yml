@@ -38,6 +38,12 @@ jobs:
           backend/package-lock.json
           frontend/playwright_blogtesting/package-lock.json
 
+    - name: Debug File Path
+      run: |
+        echo "Current Working Directory: $(pwd)"
+        echo "Listing all files in the repository:"
+        ls -R
+
     - name: Run Backend Unit Tests
       run: |
         npm ci
