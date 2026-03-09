@@ -51,25 +51,31 @@ test('invalid username will not be accepted', async () => {
 })
 
 test('duplicate username will not be accepted', async () => {
-    const originalUser = await api.get('/api/users')
-    const originalUserLength = originalUser.body.length
-
-    let user = {
+    const initialUser = {
         username: "Paquito",
         name: "Manny",
-        password: "123456yhn"
+        password: "first-password"
+    }
+    await api.post('/api/users').send(initialUser)
+
+    const usersAtStart = await api.get('/api/users')
+
+    const duplicateUser = {
+        username: "Paquito",
+        name: "different name",
+        password: "second-password"
     }
 
     const response = await api.post('/api/users')
-        .send(user)
+        .send(duplicateUser)
         .expect(400)
 
     console.log(response.body)
 
-    const finalUser = await api.get('/api/users')
+    const userAtEnd = await api.get('/api/users')
     const finalUserLength = finalUser.body.length
 
-    assert.strictEqual(finalUserLength, originalUserLength)
+    assert.strictEqual(usersAtStart.body.length, userAtEnd.body.length)
     assert.deepStrictEqual(response.body, { "error": "`username` should be unique" })
 
 })

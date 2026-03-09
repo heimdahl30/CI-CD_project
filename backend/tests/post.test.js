@@ -1,12 +1,33 @@
-const { test, after } = require('node:test')
+const { test, after, beforeEach } = require('node:test')
 const assert = require('node:assert')
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 const app = require('../src/app')
 const api = supertest(app)
+const User = require('../src/models/user')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
+let token = null
 
 test('blog added through post even without likes', async () => {
+
+  beforeEach(async () => {
+    await User.deleteMany({}) // Clear users
+    // 1. Create a test user
+    const passwordHash = await bcrypt.hash('password', 10)
+    const user = new User({ username: 'testuser', passwordHash })
+    const savedUser = await user.save()
+
+    // 2. Generate a fresh token for this specific user
+    const userForToken = {
+      username: savedUser.username,
+      id: savedUser._id,
+    }
+
+    // Ensure process.env.SECRET is defined in your GitHub Workflow!
+    token = jwt.sign(userForToken, process.env.SECRET)
+  })
 
   const initialBlogs = await api.get('/api/blogs')
   const initialBlogsLength = initialBlogs._body.length
@@ -22,7 +43,7 @@ test('blog added through post even without likes', async () => {
   }
 
   await api.post('/api/blogs')
-    .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkdvbGEiLCJpZCI6IjY4NmY2MTFhOGJhNzM3MTQyMWYyZWZmNSIsImlhdCI6MTc1MjEyOTk1MX0.SEiZId0GrqtW917Cyj0hRqrlUUb3JZgZ72oHXa5PryA')
+    .set('Authorization', `Bearer ${token}`)
     .send(blog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -54,7 +75,7 @@ test('without title or url, blog will not be added', async () => {
   }
 
   await api.post('/api/blogs')
-    .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkdvbGEiLCJpZCI6IjY4NmY2MTFhOGJhNzM3MTQyMWYyZWZmNSIsImlhdCI6MTc1MjEyOTk1MX0.SEiZId0GrqtW917Cyj0hRqrlUUb3JZgZ72oHXa5PryA')
+    .set('Authorization', `Bearer ${token}`)
     .send(blog)
     .expect(400)
 

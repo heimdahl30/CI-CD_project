@@ -7,9 +7,19 @@ const api = supertest(app)
 
 test('delete a blog', async () => {
 
+    const newBlog = {
+        title: "Test Blog for Deletion",
+        author: "Test Author",
+        url: "http://www.test.com",
+        likes: 0
+    }
+
+    const postResponse = await api.post('/api/blogs').send(newBlog)
+    console.log(postResponse)
+    const blogToDelete = postResponse.body
+
     const initialBlogs = await api.get('/api/blogs')
     const initialBlogsLength = initialBlogs.body.length
-    const blogToDelete = initialBlogs.body[5]
 
     await api
         .delete(`/api/blogs/${blogToDelete.id}`)

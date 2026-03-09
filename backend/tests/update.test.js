@@ -6,26 +6,33 @@ const supertest = require('supertest')
 const api = supertest(app)
 
 test('update a blog', async () => {
-    const initialBlogs = await api.get('/api/blogs')
-    let blogToUpdate = initialBlogs.body[0]
-    console.log(blogToUpdate.id)
+
+    const newBlog = {
+        title: "Pause innovation now and pay the price later",
+        author: "Stephanie",
+        url: "https://www.forrester.com/blogs/pause-innovation-now-and-pay-the-price-later-why-ai-readiness-cant-wait/",
+        likes: 61
+    }
+
+    await api.post('/api/blogs').send(newBlog)
+
+    const response = await api.get('/api/blogs')
 
     let blog = {
         title: "Pause innovation now and pay the price later",
         author: "Stephanie",
         url: "https://www.forrester.com/blogs/pause-innovation-now-and-pay-the-price-later-why-ai-readiness-cant-wait/",
-        likes: 65
+        likes: 62
     }
 
-    await api.put(`/api/blogs/${blogToUpdate.id}`)
+    await api.put(`/api/blogs/${response.body[0].id}`)
         .send(blog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
-    const finalBlogs = await api.get('/api/blogs')
-    const updatedBlog = finalBlogs.body[0]
+    const responsePostUpdate = await api.get('/api/blogs')
 
-    assert.notStrictEqual(updatedBlog.likes, blogToUpdate.likes)
+    assert.notStrictEqual(response.body[0].likes, responsePostUpdate.body[0].likes)
 })
 
 after(async () => {

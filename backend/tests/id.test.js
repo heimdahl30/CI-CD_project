@@ -7,15 +7,23 @@ const app = require('../src/app')
 const api = supertest(app)
 
 test('unique identifier is id', async () => {
-  const blogs = await api.get('/api/blogs')
-  console.log(blogs._body)
-  let result
 
-  if (blogs._body.length > 0) {
-    result = typeof blogs._body[0].id
+  const newBlog = {
+    title: "ID Test Blog",
+    author: "Tester",
+    url: "http://www.test.com",
+    likes: 1
   }
 
-  console.log(result)
+  await api.post('/api/blogs').send(newBlog)
+
+  const response = await api.get('/api/blogs')
+
+  const blogs = response.body
+
+  console.log(blogs)
+
+  const result = typeof blogs[0].id
 
   assert.strictEqual(result, 'string')
 
