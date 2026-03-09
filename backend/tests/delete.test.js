@@ -15,7 +15,6 @@ test('delete a blog', async () => {
     }
 
     const postResponse = await api.post('/api/blogs').send(newBlog)
-    console.log(postResponse)
     const blogToDelete = postResponse.body
 
     const initialBlogs = await api.get('/api/blogs')

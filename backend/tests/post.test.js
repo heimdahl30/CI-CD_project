@@ -102,9 +102,6 @@ test("without token, blog can't be added", async () => {
     .send(blog)
     .expect(401)
 
-  console.log(response.body)
-
-
   const finalBlogs = await api.get('/api/blogs')
   const finalBlogsLength = finalBlogs.body.length
 
