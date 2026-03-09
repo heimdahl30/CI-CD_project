@@ -29,6 +29,8 @@ test('delete a blog', async () => {
         token = jwt.sign(userForToken, process.env.SECRET)
     })
 
+    console.log("Debug token", token)
+
     const newBlog = {
         title: "Test Blog for Deletion",
         author: "Test Author",
@@ -41,6 +43,7 @@ test('delete a blog', async () => {
 
     const initialBlogs = await api.get('/api/blogs')
     const initialBlogsLength = initialBlogs.body.length
+
 
     await api
         .delete(`/api/blogs/${blogToDelete.id}`)
