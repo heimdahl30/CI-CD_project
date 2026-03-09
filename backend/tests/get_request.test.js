@@ -1,6 +1,6 @@
-const { test, describe, after} = require('node:test')
+const { test, describe, after } = require('node:test')
 const supertest = require('supertest')
-const app = require('../app')
+const app = require('../src/app')
 const mongoose = require('mongoose')
 
 const api = supertest(app)
