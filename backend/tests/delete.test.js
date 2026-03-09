@@ -38,7 +38,12 @@ test('delete a blog', async () => {
         likes: 0
     }
 
-    const postResponse = await api.post('/api/blogs').send(newBlog)
+    const postResponse = await api
+        .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
+        .send(newBlog)
+        .expect(201)
+
     const blogToDelete = postResponse.body
 
     const initialBlogs = await api.get('/api/blogs')
