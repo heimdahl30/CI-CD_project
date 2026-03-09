@@ -22,7 +22,7 @@ test('delete a blog', async () => {
         // 2. Generate a fresh token for this specific user
         const userForToken = {
             username: savedUser.username,
-            id: savedUser._id,
+            id: savedUser._id.toString()
         }
 
         // Ensure process.env.SECRET is defined in your GitHub Workflow!
