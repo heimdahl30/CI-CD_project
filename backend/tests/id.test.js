@@ -1,12 +1,35 @@
-const { test, describe, after } = require('node:test')
+const { test, beforeEach, after } = require('node:test')
 const assert = require('node:assert')
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 const app = require('../src/app')
+const User = require('../src/models/user')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const api = supertest(app)
 
+let token = null
+
 test('unique identifier is id', async () => {
+
+  beforeEach(async () => {
+    await User.deleteMany({}) // Clear users
+    // 1. Create a test user
+    const passwordHash = await bcrypt.hash('password', 10)
+    const user = new User({ username: 'testuser', passwordHash })
+    const savedUser = await user.save()
+
+    // 2. Generate a fresh token for this specific user
+    const userForToken = {
+      username: savedUser.username,
+      id: savedUser._id,
+    }
+
+    // Ensure process.env.SECRET is defined in your GitHub Workflow!
+    token = jwt.sign(userForToken, process.env.SECRET)
+  })
+
 
   const newBlog = {
     title: "ID Test Blog",
@@ -15,13 +38,11 @@ test('unique identifier is id', async () => {
     likes: 1
   }
 
-  await api.post('/api/blogs').send(newBlog)
+  await api.post('/api/blogs').set('Authorization', `${token}`).send(newBlog)
 
   const response = await api.get('/api/blogs')
 
   const blogs = response.body
-
-  console.log(blogs)
 
   const result = typeof blogs[0].id
 

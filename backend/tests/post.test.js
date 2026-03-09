@@ -65,6 +65,24 @@ test('blog added through post even without likes', async () => {
 
 test('without title or url, blog will not be added', async () => {
 
+  beforeEach(async () => {
+    await User.deleteMany({}) // Clear users
+    // 1. Create a test user
+    const passwordHash = await bcrypt.hash('password', 10)
+    const user = new User({ username: 'testuser', passwordHash })
+    const savedUser = await user.save()
+
+    // 2. Generate a fresh token for this specific user
+    const userForToken = {
+      username: savedUser.username,
+      id: savedUser._id,
+    }
+
+    // Ensure process.env.SECRET is defined in your GitHub Workflow!
+    token = jwt.sign(userForToken, process.env.SECRET)
+  })
+
+
   const initialBlogs = await api.get('/api/blogs')
   const initialBlogsLength = initialBlogs.body.length
 
@@ -88,6 +106,24 @@ test('without title or url, blog will not be added', async () => {
 
 test("without token, blog can't be added", async () => {
 
+  beforeEach(async () => {
+    await User.deleteMany({}) // Clear users
+    // 1. Create a test user
+    const passwordHash = await bcrypt.hash('password', 10)
+    const user = new User({ username: 'testuser', passwordHash })
+    const savedUser = await user.save()
+
+    // 2. Generate a fresh token for this specific user
+    const userForToken = {
+      username: savedUser.username,
+      id: savedUser._id,
+    }
+
+    // Ensure process.env.SECRET is defined in your GitHub Workflow!
+    token = jwt.sign(userForToken, process.env.SECRET)
+  })
+
+
   const initialBlogs = await api.get('/api/blogs')
   const initialBlogsLength = initialBlogs.body.length
 
@@ -99,6 +135,7 @@ test("without token, blog can't be added", async () => {
   }
 
   const response = await api.post('/api/blogs')
+    .set('Authorization', `Bearer ${token}`)
     .send(blog)
     .expect(401)
 

@@ -53,6 +53,7 @@ jobs:
         MONGODB_URI: mongodb://localhost:27017/test_db
         PORT: 3003
         NODE_ENV: test
+        SECRET: ${{ secrets.SECRET }}
 
     # 4. Run Frontend Component Tests
     - name: Run Frontend Component Tests (Vitest)
