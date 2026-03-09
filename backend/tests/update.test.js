@@ -10,26 +10,24 @@ const jwt = require('jsonwebtoken')
 
 let token = null
 
+beforeEach(async () => {
+    await User.deleteMany({}) // Clear users
+    // 1. Create a test user
+    const passwordHash = await bcrypt.hash('password', 10)
+    const user = new User({ username: 'testuser', passwordHash })
+    const savedUser = await user.save()
+
+    // 2. Generate a fresh token for this specific user
+    const userForToken = {
+        username: savedUser.username,
+        id: savedUser._id.toString()
+    }
+
+    // Ensure process.env.SECRET is defined in your GitHub Workflow!
+    token = jwt.sign(userForToken, process.env.SECRET)
+})
 
 test('update a blog', async () => {
-
-    beforeEach(async () => {
-        await User.deleteMany({}) // Clear users
-        // 1. Create a test user
-        const passwordHash = await bcrypt.hash('password', 10)
-        const user = new User({ username: 'testuser', passwordHash })
-        const savedUser = await user.save()
-
-        // 2. Generate a fresh token for this specific user
-        const userForToken = {
-            username: savedUser.username,
-            id: savedUser._id,
-        }
-
-        // Ensure process.env.SECRET is defined in your GitHub Workflow!
-        token = jwt.sign(userForToken, process.env.SECRET)
-    })
-
 
     const newBlog = {
         title: "Pause innovation now and pay the price later",

@@ -4,6 +4,28 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../src/app')
 const api = supertest(app)
+const User = require('../src/models/user')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+let token = null
+
+beforeEach(async () => {
+    await User.deleteMany({}) // Clear users
+    // 1. Create a test user
+    const passwordHash = await bcrypt.hash('password', 10)
+    const user = new User({ username: 'testuser', passwordHash })
+    const savedUser = await user.save()
+
+    // 2. Generate a fresh token for this specific user
+    const userForToken = {
+        username: savedUser.username,
+        id: savedUser._id.toString(),
+    }
+
+    // Ensure process.env.SECRET is defined in your GitHub Workflow!
+    token = jwt.sign(userForToken, process.env.SECRET)
+})
 
 test('invalid password will not be accepted', async () => {
     const originalUser = await api.get('/api/users')
@@ -15,6 +37,7 @@ test('invalid password will not be accepted', async () => {
     }
 
     const response = await api.post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
         .send(user)
         .expect(400)
 
@@ -37,6 +60,7 @@ test('invalid username will not be accepted', async () => {
     }
 
     const response = await api.post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
         .send(user)
         .expect(400)
 
@@ -54,7 +78,7 @@ test('duplicate username will not be accepted', async () => {
         name: "Manny",
         password: "first-password"
     }
-    await api.post('/api/users').send(initialUser)
+    await api.post('/api/users').set('Authorization' `Bearer ${token}`).send(initialUser)
 
     const usersAtStart = await api.get('/api/users')
 
