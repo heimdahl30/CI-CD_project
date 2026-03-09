@@ -1,4 +1,4 @@
-const { test, after } = require('node:test')
+const { test, after, beforeEach } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -78,7 +78,11 @@ test('duplicate username will not be accepted', async () => {
         name: "Manny",
         password: "first-password"
     }
-    await api.post('/api/users').set('Authorization' `Bearer ${token}`).send(initialUser)
+    await api
+        .post('/api/users')
+        .set('Authorization' `Bearer ${token}`)
+        .send(initialUser)
+        .expect(201)
 
     const usersAtStart = await api.get('/api/users')
 
@@ -88,7 +92,9 @@ test('duplicate username will not be accepted', async () => {
         password: "second-password"
     }
 
-    const response = await api.post('/api/users')
+    const response = await api
+        .post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
         .send(duplicateUser)
         .expect(400)
 

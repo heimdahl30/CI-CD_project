@@ -36,7 +36,11 @@ test('update a blog', async () => {
         likes: 61
     }
 
-    await api.post('/api/blogs').send(newBlog)
+    await api
+        .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
+        .send(newBlog)
+        .expect(201)
 
     const response = await api.get('/api/blogs')
 
@@ -50,7 +54,7 @@ test('update a blog', async () => {
     await api.put(`/api/blogs/${response.body[0].id}`)
         .set('Authorization', `Bearer ${token}`)
         .send(blog)
-        .expect(201)
+        .expect(200)
         .expect('Content-Type', /application\/json/)
 
     const responsePostUpdate = await api.get('/api/blogs')

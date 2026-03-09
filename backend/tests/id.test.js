@@ -37,7 +37,11 @@ test('unique identifier is id', async () => {
     likes: 1
   }
 
-  await api.post('/api/blogs').set('Authorization', `${token}`).send(newBlog)
+  await api
+    .post('/api/blogs')
+    .set('Authorization', `Bearer ${token}`)
+    .send(newBlog)
+    .expect(201)
 
   const response = await api.get('/api/blogs')
 

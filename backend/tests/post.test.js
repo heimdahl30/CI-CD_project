@@ -98,8 +98,8 @@ test("without token, blog can't be added", async () => {
     likes: 31
   }
 
-  const response = await api.post('/api/blogs')
-    .set('Authorization', `Bearer ${token}`)
+  const response = await api
+    .post('/api/blogs')
     .send(blog)
     .expect(401)
 
