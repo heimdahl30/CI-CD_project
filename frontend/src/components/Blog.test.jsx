@@ -92,7 +92,7 @@ test('like clicked twice', async () => {
     await user.click(button)
     await user.click(button)
 
-    expect(increaseLike.mock.calls).toHaveLength(2)
+    expect(mockHandler.mock.calls).toHaveLength(2)
 
 })
 
