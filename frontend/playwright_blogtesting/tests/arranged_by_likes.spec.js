@@ -62,6 +62,5 @@ describe('blogs arranged by likes', () => {
     for (let i = 0; i < likeValues.length - 1; i++) {
       expect(likeValues[i]).toBeGreaterThanOrEqual(likeValues[i + 1])
     }
-
   })
 })
