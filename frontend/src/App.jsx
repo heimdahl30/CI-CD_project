@@ -8,8 +8,8 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState([])
-  const [password, setPassword] = useState([])
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
@@ -36,12 +36,9 @@ const App = () => {
     event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
-
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
-
       blogService.setToken(user.token)
-
-
+      console.log('User object from backend:', user)
       console.log('Success')
       setUser(user)
       setUsername('')
@@ -50,6 +47,7 @@ const App = () => {
     catch (exception) {
       setUsername('')
       setPassword('')
+      console.log('Login failed with error:', exception.response?.data || exception.message)
       setErrorMessage('Wrong Credentials')
       setTimeout(() => { setErrorMessage(null) }, 5000)
     }
