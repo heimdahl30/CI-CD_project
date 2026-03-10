@@ -14,7 +14,12 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    exclude: [
+      '**/node_modules/**',
+      '**/playwright_blogtesting/**', // This line so vitest doesn't try to run playwright tests
+      '**/dist/**'
+    ],
     globals: true,
-    setupFiles: './testSetup.js', 
+    setupFiles: './testSetup.js',
   }
 })

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import {test, expect} from 'vitest'
+import { test, expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 import BlogCreateForm from './BlogCreateForm'
@@ -14,16 +14,24 @@ test('renders only title and author by default', () => {
         users: []
     }
 
-const mockHandler = vi.fn()
+    const mockHandler = vi.fn()
+    const mockUser = { name: 'testuser' }
 
-const { container } = render(<Blog blog = {blog} visibility = {mockHandler}/>)
+    const { container } = render(
+        <Blog
+            blog={blog}
+            increaseLike={mockHandler}
+            deleteBlog={mockHandler}
+            user={mockUser}
+        />
+    )
 
-const div = container.querySelector('.blog')
-const div2 = container.querySelector('.toggle')
+    const div = container.querySelector('.blog')
+    const div2 = container.querySelector('.toggle')
 
-expect(div).toHaveTextContent('abcde')
-expect(div).toHaveTextContent('qwerty')
-expect(div2).toHaveStyle('display:none')
+    expect(div).toHaveTextContent('abcde')
+    expect(div).toHaveTextContent('qwerty')
+    expect(div2).toHaveStyle('display:none')
 
 })
 
@@ -37,17 +45,25 @@ test('like and url shown when view button is clicked', async () => {
         users: []
     }
 
-const mockHandler = vi.fn()
+    const mockHandler = vi.fn()
+    const mockUser = { name: 'testuser' }
 
-const { container } = render(<Blog blog = {blog} visibility = {mockHandler}/>)
+    const { container } = render(
+        <Blog
+            blog={blog}
+            increaseLike={mockHandler}
+            deleteBlog={mockHandler}
+            user={mockUser}
+        />
+    )
 
-const user = userEvent.setup()
-const button = screen.getByText('view')
-await user.click(button)
+    const user = userEvent.setup()
+    const button = screen.getByText('view')
+    await user.click(button)
 
-const div = container.querySelector('.toggle')
+    const div = container.querySelector('.toggle')
 
-expect(div).not.toHaveStyle('display:none')
+    expect(div).not.toHaveStyle('display:none')
 
 })
 
@@ -61,16 +77,22 @@ test('like clicked twice', async () => {
         users: []
     }
 
-const increaseLike = vi.fn()
+    const mockHandler = vi.fn()
+    const mockUser = { name: 'testuser' }
 
-render(<Blog blog = {blog} increaseLike = {increaseLike}/>)
+    render(<Blog
+        blog={blog}
+        increaseLike={mockHandler}
+        deleteBlog={mockHandler}
+        user={mockUser}
+    />)
 
-const user = userEvent.setup()
-const button = screen.getByText('like')
-await user.click(button)
-await user.click(button)
+    const user = userEvent.setup()
+    const button = screen.getByText('like')
+    await user.click(button)
+    await user.click(button)
 
-expect(increaseLike.mock.calls).toHaveLength(2)
+    expect(increaseLike.mock.calls).toHaveLength(2)
 
 })
 
@@ -79,22 +101,22 @@ test('new blog form', async () => {
     const createBlog = vi.fn()
     const user = userEvent.setup()
 
-    render (<BlogCreateForm createBlog = {createBlog} />)
+    render(<BlogCreateForm createBlog={createBlog} />)
 
-const title = screen.getByPlaceholderText('title....')
-const author = screen.getByPlaceholderText('author....')
-const url = screen.getByPlaceholderText('url....')
+    const title = screen.getByPlaceholderText('title....')
+    const author = screen.getByPlaceholderText('author....')
+    const url = screen.getByPlaceholderText('url....')
 
-const submitButton = screen.getByText('submit')
+    const submitButton = screen.getByText('submit')
 
-await user.type(title, 'blog title')
-await user.type(author, 'blog author')
-await user.type(url, 'http://www.abc.com')
-await userEvent.click(submitButton)
+    await user.type(title, 'blog title')
+    await user.type(author, 'blog author')
+    await user.type(url, 'http://www.abc.com')
+    await userEvent.click(submitButton)
 
-console.log(createBlog.mock.calls)
+    console.log(createBlog.mock.calls)
 
-expect(createBlog.mock.calls).toHaveLength(1)
+    expect(createBlog.mock.calls).toHaveLength(1)
 
 })
 
