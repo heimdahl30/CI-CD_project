@@ -107,7 +107,7 @@ test('new blog form', async () => {
     const author = screen.getByPlaceholderText('author....')
     const url = screen.getByPlaceholderText('url....')
 
-    const submitButton = screen.getByText('create blog')
+    const submitButton = screen.getByText('save blog')
 
     await user.type(title, 'blog title')
     await user.type(author, 'blog author')
