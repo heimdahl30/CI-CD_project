@@ -26,45 +26,45 @@ const Blog = ({ blog, increaseLike, deleteBlog, user }) => {
   console.log(blog.users.length)
 
 
-  if (blog.users.length !== 0 && user.name === blog.users[0].name){
+  if (blog.users.length !== 0 && user.name === blog.users[0].name) {
 
 
     return (
 
-      <div style = {blogStyle} className = "blog">
+      <div style={blogStyle} className="blog">
         {blog.title} {'\n'} {blog.author} {'\n'}
-        <button onClick = {visibility}>{toggle}</button>
-        <div style = {view} className = 'toggle'>
+        <button onClick={visibility}>{toggle}</button>
+        <div style={view} className='toggle'>
           {blog.url}
         </div>
-        <div style = {view} className = 'toggle' data-testid = 'likes'>
-    likes {blog.likes} {'\n'}
-          <button onClick = {() => increaseLike(blog)}>like</button>
+        <div style={view} className='toggle' data-testid='likes'>
+          likes {blog.likes} {'\n'}
+          <button onClick={() => increaseLike(blog)}>like</button>
         </div>
-        <div style = {view} className = 'toggle'>
+        <div style={view} className='toggle'>
           {blog.users[0].name}
-          </div>
-          <div style = {view} className = 'toggle'>
-            <button onClick = {() => deleteBlog(blog)} style = {delButton}>remove blog</button>
-          </div>
         </div>
+        <div style={view} className='toggle'>
+          <button onClick={() => deleteBlog(blog)} style={delButton}>remove blog</button>
+        </div>
+      </div>
     )
   }
-  else  if (blog.users.length !== 0){
+  else if (blog.users.length !== 0) {
 
     return (
 
-      <div style = {blogStyle} className = "blog">
+      <div style={blogStyle} className="blog">
         {blog.title} {'\n'} {blog.author} {'\n'}
-        <button onClick = {visibility}>{toggle}</button>
-        <div style = {view} className = 'toggle'>
+        <button onClick={visibility}>{toggle}</button>
+        <div style={view} className='toggle'>
           {blog.url}
         </div>
-        <div style = {view} className = 'toggle' data-testid = 'likes'>
-    likes {blog.likes} {'\n'}
-          <button onClick = {() => increaseLike(blog)}>like</button>
+        <div style={view} className='toggle' data-testid='likes'>
+          likes {blog.likes} {'\n'}
+          <button onClick={() => increaseLike(blog)}>like</button>
         </div>
-        <div style = {view} className = 'toggle'>
+        <div style={view} className='toggle'>
           {blog.users[0].name}
         </div>
       </div>
@@ -75,15 +75,15 @@ const Blog = ({ blog, increaseLike, deleteBlog, user }) => {
   else {
     return (
 
-      <div style = {blogStyle} className = 'blog'>
+      <div style={blogStyle} className='blog'>
         {blog.title} {'\n'} {blog.author} {'\n'}
-        <button onClick = {visibility}>{toggle}</button>
-        <div style = {view} className = 'toggle'>
+        <button onClick={visibility}>{toggle}</button>
+        <div style={view} className='toggle'>
           {blog.url}
         </div>
-        <div style = {view} className = 'toggle' data-testid = 'likes'>
-    likes {blog.likes} {'\n'}
-          <button onClick = {() => increaseLike(blog)}>like</button>
+        <div style={view} className='toggle' data-testid='likes'>
+          likes {blog.likes} {'\n'}
+          <button onClick={() => increaseLike(blog)}>like</button>
         </div>
       </div>
     )

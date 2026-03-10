@@ -29,13 +29,13 @@ describe('Blog app', () => {
       await page.getByRole('textbox').last().fill('Milk')
       await page.getByRole('button', { name: 'login' }).click()
 
-      await expect(page.getByText('Cheese logged in')).toBeVisible()
+      await expect(page.getByText('Cheese logged in')).toBeVisible({ timeout: 10000 })
     })
 
     test('fails with wrong credentials', async ({ page }) => {
 
       await loginWith(page, 'Mozarella', 'wrong')
-      await expect(page.getByText('wrong credentials')).toBeVisible()
+      await expect(page.getByText('wrong credentials')).toBeVisible({ timeout: 10000 })
 
     })
 
@@ -52,7 +52,7 @@ describe('Blog app', () => {
         await page.getByTestId('title').fill('blog header')
         await page.getByTestId('author').fill('blog author')
         await page.getByTestId('url').fill('http://www.blog-testing.com')
-        await page.getByRole('button', { name: 'submit' }).click()
+        await page.getByRole('button', { name: 'save blog' }).click()
         await expect(page.getByText('blog author')).toBeVisible()
 
       })

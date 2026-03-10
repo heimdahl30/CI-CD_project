@@ -28,14 +28,14 @@ const App = () => {
   console.log(username)
   console.log(password)
 
-  let sortedBlog = blogs.sort((a,b) => b.likes - a.likes)
+  let sortedBlog = blogs.sort((a, b) => b.likes - a.likes)
 
   console.log(sortedBlog)
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login ({ username, password })
+      const user = await loginService.login({ username, password })
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
@@ -47,11 +47,11 @@ const App = () => {
       setUsername('')
       setPassword('')
     }
-    catch(exception){
+    catch (exception) {
       setUsername('')
       setPassword('')
       setErrorMessage('Wrong Credentials')
-      setTimeout(() => {setErrorMessage(null)}, 5000)
+      setTimeout(() => { setErrorMessage(null) }, 5000)
     }
   }
 
@@ -67,7 +67,7 @@ const App = () => {
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
         setMessage(`a new blog ${returnedBlog.title} has been created`)
-        setTimeout(() => {setMessage(null)}, 5000)
+        setTimeout(() => { setMessage(null) }, 5000)
       }
       )
   }
@@ -102,13 +102,13 @@ const App = () => {
     return (
       <div>
 
-        <ErrorNotification errorMessage = {errorMessage} />
+        <ErrorNotification errorMessage={errorMessage} />
 
 
-        <form onSubmit = {handleLogin}>
+        <form onSubmit={handleLogin}>
 
           <div>
-          username
+            username
             <input
               type="text"
               value={username}
@@ -117,7 +117,7 @@ const App = () => {
             />
           </div>
           <div>
-          password
+            password
             <input
               type="password"
               value={password}
@@ -140,21 +140,21 @@ const App = () => {
 
     return (
       <div>
-        <SuccessNotification message = {message} />
+        <SuccessNotification message={message} />
         <h2>blogs</h2>
-        <p> {user.name} logged in <button onClick = {handleLogOut}>logout</button></p>
-        <div style = {hideWhenVisible}>
+        <p> {user.name} logged in <button onClick={handleLogOut}>logout</button></p>
+        <div style={hideWhenVisible}>
           <button onClick={() => setBlogFormVisible(true)}>create blog</button>
         </div>
         <div style={showWhenVisible}>
-          <BlogCreateForm createBlog = {addBlog}
+          <BlogCreateForm createBlog={addBlog}
           />
           <button onClick={() => setBlogFormVisible(false)}>cancel</button>
         </div>
         <br></br>
         {sortedBlog.map(blog =>
 
-          <Blog key={blog.id} blog={blog} user = {user} increaseLike = {increaseLike} deleteBlog = {deleteBlog}/>
+          <Blog key={blog.id} blog={blog} user={user} increaseLike={increaseLike} deleteBlog={deleteBlog} />
 
         )}
 
