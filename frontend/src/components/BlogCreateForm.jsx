@@ -1,11 +1,10 @@
 import { useState } from 'react'
 
-
 const BlogCreateForm = ({ createBlog }) => {
 
-  const [title,setTitle] = useState('')
-  const [author,setAuthor] = useState('')
-  const [url,setUrl] = useState('')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   const addBlog = (event) => {
     event.preventDefault()
@@ -23,7 +22,7 @@ const BlogCreateForm = ({ createBlog }) => {
 
   return (
     <div>
-      <form onSubmit = {addBlog}>
+      <form onSubmit={addBlog}>
 
         <div>
           title:
@@ -32,8 +31,8 @@ const BlogCreateForm = ({ createBlog }) => {
             type="text"
             value={title}
             name="title"
-            onChange = {(event) => setTitle(event.target.value)}
-            placeholder = 'title....'
+            onChange={(event) => setTitle(event.target.value)}
+            placeholder='title....'
           />
         </div>
         <div>
@@ -43,8 +42,8 @@ const BlogCreateForm = ({ createBlog }) => {
             type="text"
             value={author}
             name="author"
-            onChange = {(event) => setAuthor(event.target.value)}
-            placeholder = 'author....'
+            onChange={(event) => setAuthor(event.target.value)}
+            placeholder='author....'
           />
         </div>
         <div>
@@ -54,11 +53,11 @@ const BlogCreateForm = ({ createBlog }) => {
             type="url"
             value={url}
             name="url"
-            onChange = {(event) => setUrl(event.target.value)}
-            placeholder = 'url....'
+            onChange={(event) => setUrl(event.target.value)}
+            placeholder='url....'
           />
         </div>
-        <button type="submit">submit</button>
+        <button type="submit">create blog</button>
       </form>
     </div>
   )

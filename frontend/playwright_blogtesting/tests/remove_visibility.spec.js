@@ -14,6 +14,7 @@ describe('Blog remove', () => {
 
     await page.goto('/')
     await loginWith(page, 'Mozarella', 'Milk')
+    await expect(page.getByText('Cheese logged in')).toBeVisible()
     await page.getByRole('button', { name: 'create blog' }).click()
     await createBlog(page, 'random blog', 'myself', 'http://www.bbb.com')
     await page.getByRole('button', { name: 'logout' }).click()

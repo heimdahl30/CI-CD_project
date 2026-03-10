@@ -20,7 +20,7 @@ describe('blogs arranged by likes', () => {
   test('blogs arranged by likes in descending order', async ({ page }) => {
 
     await loginWith(page, 'Mozarella', 'Milk')
-
+    await expect(page.getByText('Cheese logged in')).toBeVisible()
     await page.getByRole('button', { name: 'create blog' }).click()
 
     await createBlog(page, 'First', 'One', 'http://www.111.com')
