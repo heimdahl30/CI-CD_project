@@ -3,8 +3,8 @@ const { loginWith, createBlog } = require('./helper')
 
 describe ('Blog app', () => {
   beforeEach(async ({ request, page }) => {
-  await request.post('/api/testing/reset')
-  await request.post('/api/users', {
+  await request.post('http://localhost:3003/api/testing/reset')
+  await request.post('http://localhost:3003/api/users', {
       data: {
         name: 'Cheese',
         username: 'Mozarella',
