@@ -11,8 +11,10 @@ describe('Blog remove', () => {
         password: 'Milk'
       }
     })
-    await page.evaluate(() => window.localStorage.clear())
     await page.goto('/')
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
+
     await loginWith(page, 'Mozarella', 'Milk')
     await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 10000 })
     await page.getByRole('button', { name: 'create blog' }).click()

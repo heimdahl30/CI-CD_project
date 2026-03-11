@@ -11,8 +11,9 @@ describe('Blog app', () => {
         password: 'Milk'
       }
     })
-    await page.evaluate(() => window.localStorage.clear())
     await page.goto('/')
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
   })
 
   test('Login form is shown', async ({ page }) => {

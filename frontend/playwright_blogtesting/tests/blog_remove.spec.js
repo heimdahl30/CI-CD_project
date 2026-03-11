@@ -11,8 +11,9 @@ describe('Blog remove', () => {
         password: 'Milk'
       }
     })
-    await page.evaluate(() => window.localStorage.clear())
     await page.goto('/')
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
 
   })
 
