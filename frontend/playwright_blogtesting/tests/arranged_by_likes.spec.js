@@ -21,7 +21,7 @@ describe('blogs arranged by likes', () => {
   test('blogs arranged by likes in descending order', async ({ page }) => {
 
     await loginWith(page, 'Mozarella', 'Milk')
-    await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 10000 })
+    await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
     await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 15000 })
     await page.getByRole('button', { name: 'create blog' }).click()
 

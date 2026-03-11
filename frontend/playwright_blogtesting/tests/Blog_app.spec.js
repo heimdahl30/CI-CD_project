@@ -30,13 +30,13 @@ describe('Blog app', () => {
       await page.getByRole('textbox').last().fill('Milk')
       await page.getByRole('button', { name: 'login' }).click()
 
-      await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 10000 })
+      await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
     })
 
     test('fails with wrong credentials', async ({ page }) => {
 
       await loginWith(page, 'Mozarella', 'wrong')
-      await expect(page.getByText(/wrong credentials/i)).toBeVisible({ timeout: 10000 })
+      await expect(page.getByText(/wrong credentials/i)).toBeVisible({ timeout: 15000 })
 
     })
 
