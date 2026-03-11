@@ -12,7 +12,7 @@ describe('blogs arranged by likes', () => {
         password: 'Milk'
       }
     })
-
+    await page.evaluate(() => window.localStorage.clear())
     await page.goto('/')
 
   })
@@ -20,7 +20,7 @@ describe('blogs arranged by likes', () => {
   test('blogs arranged by likes in descending order', async ({ page }) => {
 
     await loginWith(page, 'Mozarella', 'Milk')
-    await expect(page.getByText('Cheese logged in')).toBeVisible({ timeout: 10000 })
+    await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 10000 })
     await page.getByRole('button', { name: 'create blog' }).click()
 
     await createBlog(page, 'First', 'One', 'http://www.111.com')

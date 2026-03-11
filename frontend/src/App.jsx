@@ -19,9 +19,11 @@ const App = () => {
 
   useEffect(() => {
     blogService
-      .getAll().then(blogs => {
+      .getAll()
+      .then(blogs => {
         setBlogs(blogs)
       })
+      .catch(error => console.log('Initial blog fetch failed:', error.message))
   }, [])
 
   console.log(errorMessage)
@@ -34,6 +36,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
+    console.log('LOGIN BUTTON CLICKED')
     try {
       const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))

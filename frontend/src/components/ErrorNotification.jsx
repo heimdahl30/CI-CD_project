@@ -1,10 +1,10 @@
 const ErrorNotification = ({ errorMessage }) => {
-  if (errorMessage === null){
+  if (errorMessage === null) {
     return null
   }
   else {
     return (
-      <div className = "error">
+      <div className="error">
         {errorMessage}
       </div>
     )
