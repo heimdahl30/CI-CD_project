@@ -17,15 +17,16 @@ describe('Blog remove', () => {
 
     await loginWith(page, 'Mozarella', 'Milk')
     await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 10000 })
+    await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 15000 })
     await page.getByRole('button', { name: 'create blog' }).click()
     await createBlog(page, 'random blog', 'myself', 'http://www.bbb.com')
     await page.getByRole('button', { name: 'logout' }).click()
-
+    await expect(page.getByRole('button', { name: 'login' })).toBeVisible()
   })
 
   test('remove button visible only to the user who created the blog', async ({ request, page }) => {
 
-    await request.post('/api/users', {
+    await request.post('http://localhost:3003/api/users', {
       data: {
         name: 'Mumbai',
         username: 'India',
@@ -38,6 +39,5 @@ describe('Blog remove', () => {
     await expect(page.getByText('random blog')).toBeVisible()
     await expect(page.getByText('myself')).toBeVisible()
     await expect(page.getByRole('button', { name: 'remove blog' })).not.toBeVisible()
-
   })
 })

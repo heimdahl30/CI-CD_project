@@ -49,7 +49,8 @@ describe('Blog app', () => {
 
       test('a new blog can be created', async ({ page }) => {
 
-        await page.getByRole('button', { name: 'create blog' }).click()
+        await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 15000 })
+        await page.getByRole('button', { name: 'create blog' }).click();
         await page.getByTestId('title').fill('blog header')
         await page.getByTestId('author').fill('blog author')
         await page.getByTestId('url').fill('http://www.blog-testing.com')
@@ -59,7 +60,8 @@ describe('Blog app', () => {
       })
 
       test('blog can be liked', async ({ page }) => {
-        await page.getByRole('button', { name: 'create blog' }).click()
+        await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 15000 })
+        await page.getByRole('button', { name: 'create blog' }).click();
         await createBlog(page, 'blog header', 'blog author', 'http://www.blog-testing2.com')
         await page.getByRole('button', { name: 'view' }).click()
         await page.getByRole('button', { name: 'like' }).click()
