@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/blogs'
+const baseUrl = 'http://127.0.0.1:3003/api/blogs'
 
 let token = null
 
