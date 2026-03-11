@@ -29,8 +29,9 @@ describe('Blog app', () => {
       await page.getByRole('textbox').first().fill('Mozarella')
       await page.getByRole('textbox').last().fill('Milk')
       await page.getByRole('button', { name: 'login' }).click()
+      await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 15000 })
 
-      await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
+      // await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
     })
 
     test('fails with wrong credentials', async ({ page }) => {

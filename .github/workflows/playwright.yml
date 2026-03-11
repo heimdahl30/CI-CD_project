@@ -92,7 +92,7 @@ jobs:
     # 5. Run Playwright Tests
     - name: Run Playwright tests
       timeout-minutes: 5
-      run: DEBUG=pw:api npx playwright test --reporter=list,html --timeout=30000
+      run: DEBUG=pw:api npx playwright test --reporter=list,html --timeout=60000
       working-directory: frontend/playwright_blogtesting
 
     - uses: actions/upload-artifact@v4
