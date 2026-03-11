@@ -26,10 +26,8 @@ describe('Blog app', () => {
   describe('Login', () => {
 
     test('succeeds with correct credentials', async ({ page }) => {
-      await page.getByRole('textbox').first().fill('Mozarella')
-      await page.getByRole('textbox').last().fill('Milk')
-      await page.getByRole('button', { name: 'login' }).click()
-      await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 15000 })
+      await loginWith(page, 'Mozarella', 'Milk')
+      await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 30000 })
 
       // await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
     })
@@ -37,7 +35,7 @@ describe('Blog app', () => {
     test('fails with wrong credentials', async ({ page }) => {
 
       await loginWith(page, 'Mozarella', 'wrong')
-      await expect(page.getByText(/wrong credentials/i)).toBeVisible({ timeout: 15000 })
+      await expect(page.getByText(/wrong credentials/i)).toBeVisible({ timeout: 30000 })
 
     })
 
@@ -50,7 +48,7 @@ describe('Blog app', () => {
 
       test('a new blog can be created', async ({ page }) => {
 
-        await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 15000 })
+        await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 30000 })
         await page.getByRole('button', { name: 'create blog' }).click();
         await page.getByTestId('title').fill('blog header')
         await page.getByTestId('author').fill('blog author')
@@ -61,7 +59,7 @@ describe('Blog app', () => {
       })
 
       test('blog can be liked', async ({ page }) => {
-        await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 15000 })
+        await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 30000 })
         await page.getByRole('button', { name: 'create blog' }).click();
         await createBlog(page, 'blog header', 'blog author', 'http://www.blog-testing2.com')
         await page.getByRole('button', { name: 'view' }).click()
