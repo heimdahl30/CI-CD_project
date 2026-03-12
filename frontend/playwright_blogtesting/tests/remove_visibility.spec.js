@@ -16,7 +16,6 @@ describe('Blog remove', () => {
     await page.reload()
 
     await loginWith(page, 'Mozarella', 'Milk')
-    await page.waitForTimeout(1000)
     await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 30000 })
     // await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
     await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 30000 })
@@ -37,7 +36,6 @@ describe('Blog remove', () => {
     })
 
     await loginWith(page, 'India', 'City')
-    await page.waitForTimeout(1000)
     await page.getByRole('button', { name: 'view' }).click()
     await expect(page.getByText('random blog')).toBeVisible()
     await expect(page.getByText('myself')).toBeVisible()
