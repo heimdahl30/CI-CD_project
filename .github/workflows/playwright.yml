@@ -86,13 +86,13 @@ jobs:
       working-directory: frontend/playwright_blogtesting
 
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install chromium --with-deps
       working-directory: frontend/playwright_blogtesting
 
     # 5. Run Playwright Tests
     - name: Run Playwright tests
       timeout-minutes: 20
-      run: DEBUG=pw:api npx playwright test --reporter=list,html --timeout=120000
+      run: npx playwright test --reporter=list,html --timeout=120000
       working-directory: frontend/playwright_blogtesting
 
     - uses: actions/upload-artifact@v4
