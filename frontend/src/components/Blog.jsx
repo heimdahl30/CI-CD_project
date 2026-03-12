@@ -37,8 +37,8 @@ const Blog = ({ blog, increaseLike, deleteBlog, user }) => {
         <div style={view} className='toggle'>
           {blog.url}
         </div>
-        <div style={view} className='toggle' data-testid='likes'>
-          likes {blog.likes} {'\n'}
+        <div style={view} className='toggle'>
+          likes <span data-testid='like-count'>{blog.likes}</span> {'\n'}
           <button onClick={() => increaseLike(blog)}>like</button>
         </div>
         <div style={view} className='toggle'>
@@ -60,8 +60,8 @@ const Blog = ({ blog, increaseLike, deleteBlog, user }) => {
         <div style={view} className='toggle'>
           {blog.url}
         </div>
-        <div style={view} className='toggle' data-testid='likes'>
-          likes {blog.likes} {'\n'}
+        <div style={view} className='toggle'>
+          likes <span data-testid='like-count'>{blog.likes}</span> {'\n'}
           <button onClick={() => increaseLike(blog)}>like</button>
         </div>
         <div style={view} className='toggle'>
@@ -81,8 +81,8 @@ const Blog = ({ blog, increaseLike, deleteBlog, user }) => {
         <div style={view} className='toggle'>
           {blog.url}
         </div>
-        <div style={view} className='toggle' data-testid='likes'>
-          likes {blog.likes} {'\n'}
+        <div style={view} className='toggle'>
+          likes <span data-testid='like-count'>{blog.likes}</span> {'\n'}
           <button onClick={() => increaseLike(blog)}>like</button>
         </div>
       </div>

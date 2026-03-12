@@ -30,7 +30,7 @@ const App = () => {
   console.log(username)
   console.log(password)
 
-  let sortedBlog = blogs.sort((a, b) => b.likes - a.likes)
+  let sortedBlog = [...blogs].sort((a, b) => b.likes - a.likes)
 
   console.log(sortedBlog)
 

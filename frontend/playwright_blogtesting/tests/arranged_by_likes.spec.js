@@ -4,8 +4,8 @@ const { loginWith, createBlog } = require('./helper')
 describe('blogs arranged by likes', () => {
   beforeEach(async ({ request, page }) => {
 
-    await request.post('http://localhost:3003/api/testing/reset')
-    await request.post('http://localhost:3003/api/users', {
+    await request.post('http://127.0.0.1:3003/api/testing/reset')
+    await request.post('http://127.0.0.1:3003/api/users', {
       data: {
         name: 'Cheese',
         username: 'Mozarella',
@@ -21,6 +21,7 @@ describe('blogs arranged by likes', () => {
   test('blogs arranged by likes in descending order', async ({ page }) => {
 
     await loginWith(page, 'Mozarella', 'Milk')
+    await page.waitForTimeout(1000)
     await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 30000 })
     // await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
     await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 30000 })
@@ -53,7 +54,7 @@ describe('blogs arranged by likes', () => {
     await page.getByRole('button', { name: 'view' }).nth(0).click()
     await expect(page.getByRole('button', { name: 'like' })).toHaveCount(3)
 
-    const list = page.getByTestId('likes');
+    const list = page.getByTestId('like-count');
     await expect(list).toHaveCount(3); // This forces Playwright to wait until all 3 are visible
     const items = await list.all();
     const likeValues = await Promise.all(items.map(async (item) => {
