@@ -25,7 +25,7 @@ describe('Blog app', () => {
 
   describe('Login', () => {
 
-    test('succeeds with correct credentials', async ({ page }) => {
+    test.only('succeeds with correct credentials', async ({ page }) => {
       await loginWith(page, 'Mozarella', 'Milk')
       await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 45000 })
 
@@ -44,7 +44,7 @@ describe('Blog app', () => {
       beforeEach(async ({ page }) => {
 
         await loginWith(page, 'Mozarella', 'Milk')
-        await page.waitForTimeout(1000)
+
 
       })
 
