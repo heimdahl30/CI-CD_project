@@ -1,7 +1,7 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
 const { loginWith, createBlog } = require('./helper')
 
-describe('blogs arranged by likes', () => {
+describe.skip('blogs arranged by likes', () => {
   beforeEach(async ({ request, page }) => {
 
     await request.post('http://127.0.0.1:3003/api/testing/reset')

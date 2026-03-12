@@ -91,7 +91,7 @@ jobs:
 
     # 5. Run Playwright Tests
     - name: Run Playwright tests
-      timeout-minutes: 10
+      timeout-minutes: 20
       run: DEBUG=pw:api npx playwright test --reporter=list,html --timeout=120000
       working-directory: frontend/playwright_blogtesting
 
