@@ -16,7 +16,7 @@ const App = () => {
 
   const [blogFormVisible, setBlogFormVisible] = useState(false)
 
-
+  // useEffect
   useEffect(() => {
     blogService
       .getAll()
