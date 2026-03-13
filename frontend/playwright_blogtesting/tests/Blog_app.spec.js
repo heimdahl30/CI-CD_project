@@ -25,7 +25,7 @@ describe('Blog app', () => {
 
   describe('Login', () => {
 
-    test.only('succeeds with correct credentials', async ({ page }) => {
+    test('succeeds with correct credentials', async ({ page }) => {
       await loginWith(page, 'Mozarella', 'Milk')
       await expect(page.getByRole('button', { name: 'logout' })).toBeVisible({ timeout: 60000 })
       await expect(page.getByText(/cheese logged in/i)).toBeVisible({ timeout: 15000 })
