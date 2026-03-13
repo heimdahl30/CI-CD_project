@@ -39,6 +39,6 @@ describe('Blog remove', () => {
     await page.getByRole('button', { name: 'view' }).click()
     await expect(page.getByText('random blog')).toBeVisible()
     await expect(page.getByText('myself')).toBeVisible()
-    await expect(page.getByRole('button', { name: 'remove blog' })).not.toBeVisible()
+    await expect(page.getByRole('button', { name: 'remove blog' })).toBeHidden()
   })
 })

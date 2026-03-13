@@ -17,8 +17,8 @@ describe('Blog app', () => {
   })
 
   test('Login form is shown', async ({ page }) => {
-    const locator1 = await page.getByText('username')
-    const locator2 = await page.getByText('password')
+    const locator1 = page.getByText('username')
+    const locator2 = page.getByText('password')
     await expect(locator1).toBeVisible()
     await expect(locator2).toBeVisible()
   })
@@ -34,7 +34,6 @@ describe('Blog app', () => {
     test('fails with wrong credentials', async ({ page }) => {
 
       await loginWith(page, 'Mozarella', 'wrong')
-      await page.waitForTimeout(1000)
       await expect(page.getByText(/wrong credentials/i)).toBeVisible({ timeout: 30000 })
 
     })
@@ -50,7 +49,7 @@ describe('Blog app', () => {
       test('a new blog can be created', async ({ page }) => {
 
         await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 30000 })
-        await page.getByRole('button', { name: 'create blog' }).click();
+        await page.getByRole('button', { name: 'create blog' }).click()
         await page.getByTestId('title').fill('blog header')
         await page.getByTestId('author').fill('blog author')
         await page.getByTestId('url').fill('http://www.blog-testing.com')
@@ -61,7 +60,7 @@ describe('Blog app', () => {
 
       test('blog can be liked', async ({ page }) => {
         await page.getByRole('button', { name: 'create blog' }).waitFor({ state: 'visible', timeout: 30000 })
-        await page.getByRole('button', { name: 'create blog' }).click();
+        await page.getByRole('button', { name: 'create blog' }).click()
         await createBlog(page, 'blog header', 'blog author', 'http://www.blog-testing2.com')
         await page.getByRole('button', { name: 'view' }).click()
         await page.getByRole('button', { name: 'like' }).click()

@@ -53,9 +53,9 @@ describe('blogs arranged by likes', () => {
     await page.getByRole('button', { name: 'view' }).nth(0).click()
     await expect(page.getByRole('button', { name: 'like' })).toHaveCount(3)
 
-    const list = page.getByTestId('like-count');
-    await expect(list).toHaveCount(3); // This forces Playwright to wait until all 3 are visible
-    const items = await list.all();
+    const list = page.getByTestId('like-count')
+    await expect(list).toHaveCount(3) // This forces Playwright to wait until all 3 are visible
+    const items = await list.all()
     const likeValues = await Promise.all(items.map(async (item) => {
       const text = await item.textContent()
       const numMatch = text.match(/\d+/g)

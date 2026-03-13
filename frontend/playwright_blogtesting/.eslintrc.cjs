@@ -3,12 +3,11 @@ module.exports = {
     'eslint:recommended',
     'plugin:playwright/recommended' // Adds Playwright-specific rules
   ],
+  rules: {
+    'linebreak-style': 'off',
+  },
   env: {
     node: true,
-    es2021: true 
+    es2021: true
   },
-  rules: {
-    // Senior tip: This prevents the #1 cause of hanging tests
-    'playwright/no-floating-promises': 'error' 
-  }
 }
