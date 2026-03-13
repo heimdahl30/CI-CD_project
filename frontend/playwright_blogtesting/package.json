@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test":"playwright test",
-    "test:report":"playwright show-report",
-    "test:chromium": "playwright test --project=chromium"
+    "test": "playwright test",
+    "test:report": "playwright show-report",
+    "test:chromium": "playwright test --project=chromium",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.54.1",
-    "@types/node": "^24.1.0"
+    "@types/node": "^24.1.0",
+    "eslint": "^10.0.3",
+    "eslint-plugin-playwright": "^2.9.0"
   }
 }
