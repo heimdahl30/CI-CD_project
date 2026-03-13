@@ -86,7 +86,7 @@ test('without title or url, blog will not be added', async () => {
   assert.strictEqual(finalBlogsLength, initialBlogsLength)
 })
 
-test('without token, blog can\'t be added', async () => {
+test('without token, blog cannot be added', async () => {
 
   const initialBlogs = await api.get('/api/blogs')
   const initialBlogsLength = initialBlogs.body.length
@@ -108,8 +108,6 @@ test('without token, blog can\'t be added', async () => {
 
   assert.strictEqual(finalBlogsLength, initialBlogsLength)
   assert(response.body.error.includes('token invalid'))
-
-
 })
 
 after(async () => {

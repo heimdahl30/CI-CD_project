@@ -1,5 +1,4 @@
 const { JsonWebTokenError } = require('jsonwebtoken')
-// random comment
 const logger = require('./logger')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
@@ -43,7 +42,7 @@ const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
-const errorHandler = (error, request, response) => {
+const errorHandler = (error, request, response, next) => {
 
   logger.error(error.message)
 
