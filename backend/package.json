@@ -22,8 +22,7 @@
     "mongoose": "^8.16.1"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.0.3",
+    "eslint": "^8.57.1",
     "supertest": "^7.1.1",
     "test": "^3.3.0"
   }
