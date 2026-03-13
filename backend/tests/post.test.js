@@ -36,9 +36,9 @@ test('blog added through post even without likes', async () => {
   console.log(initialBlogsLength)
 
   let blog = {
-    title: "A Peek At Bank of America's AI Playbook",
-    author: "Brian",
-    url: "https://www.forrester.com/blogs/a-peek-at-bank-of-americas-ai-playbook/",
+    title: 'A Peek At Bank of America\'s AI Playbook',
+    author: 'Brian',
+    url: 'https://www.forrester.com/blogs/a-peek-at-bank-of-americas-ai-playbook/',
 
   }
 
@@ -60,7 +60,7 @@ test('blog added through post even without likes', async () => {
 
   assert.strictEqual(response.body.length, initialBlogsLength + 1)
   assert.strictEqual(likesLength, initialLikesLength + 1)
-  assert(contents.includes("A Peek At Bank of America's AI Playbook"))
+  assert(contents.includes('A Peek At Bank of America\'s AI Playbook'))
 })
 
 test('without title or url, blog will not be added', async () => {
@@ -69,8 +69,8 @@ test('without title or url, blog will not be added', async () => {
   const initialBlogsLength = initialBlogs.body.length
 
   const blog = {
-    title: "This should not get web logged.",
-    author: "Sin",
+    title: 'This should not get web logged.',
+    author: 'Sin',
     likes: 31
   }
 
@@ -86,15 +86,15 @@ test('without title or url, blog will not be added', async () => {
   assert.strictEqual(finalBlogsLength, initialBlogsLength)
 })
 
-test("without token, blog can't be added", async () => {
+test('without token, blog can\'t be added', async () => {
 
   const initialBlogs = await api.get('/api/blogs')
   const initialBlogsLength = initialBlogs.body.length
 
   const blog = {
-    title: "This should not get web logged.",
-    author: "Sin",
-    url: "yyyyyyyy",
+    title: 'This should not get web logged.',
+    author: 'Sin',
+    url: 'yyyyyyyy',
     likes: 31
   }
 

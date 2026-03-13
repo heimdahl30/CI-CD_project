@@ -26,8 +26,8 @@ blogsRouter.post('/', userExtractor, async (request, response, next) => {
       users: user._id
     })
 
-    if (blog.title && blog.url && !blog["likes"]) {
-      blog["likes"] = 0;
+    if (blog.title && blog.url && !blog['likes']) {
+      blog['likes'] = 0
       const result = await blog.save()
       const populatedBlog = await result.populate('users')
       user.blogs = user.blogs.concat(result._id)
@@ -55,8 +55,8 @@ blogsRouter.delete('/:id', userExtractor, async (request, response, next) => {
 
   try {
     const user = request.user
-    console.log("User", user)
-    console.log("User id", user._id.valueOf())
+    console.log('User', user)
+    console.log('User id', user._id.valueOf())
 
     if (!user) {
       return response.status(400).json({ error: 'user missing or not valid' })
@@ -64,19 +64,19 @@ blogsRouter.delete('/:id', userExtractor, async (request, response, next) => {
 
     else {
       const blog = await Blog.findById(request.params.id)
-      console.log("Blog here", blog)
-      console.log("Blog user id", blog.users[0].valueOf())
+      console.log('Blog here', blog)
+      console.log('Blog user id', blog.users[0].valueOf())
       if (blog.users[0].valueOf() === user._id.valueOf()) {
         await Blog.findByIdAndDelete(request.params.id)
         user.blogs = user.blogs.filter(
           (id) => id.valueOf() !== request.params.id
-        );
-        await user.save();
-        console.log("Success")
+        )
+        await user.save()
+        console.log('Success')
         response.status(204).end()
       }
       else {
-        response.status(400).json({ error: "user and blog don't match" })
+        response.status(400).json({ error: 'user and blog don\'t match' })
       }
     }
   }
@@ -97,16 +97,16 @@ blogsRouter.put('/:id', async (request, response, next) => {
       return response.status(404).end()
     }
 
-    result.title = title;
-    result.author = author;
-    result.url = url;
-    result.likes = likes;
+    result.title = title
+    result.author = author
+    result.url = url
+    result.likes = likes
 
 
     const updatedBlog = await result.save()
-    const updatedPopulatedBlog = await updatedBlog.populate("users");
-    console.log(updatedPopulatedBlog);
-    return response.status(200).json(updatedPopulatedBlog);
+    const updatedPopulatedBlog = await updatedBlog.populate('users')
+    console.log(updatedPopulatedBlog)
+    return response.status(200).json(updatedPopulatedBlog)
   }
 
   catch (error) {

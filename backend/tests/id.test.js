@@ -31,9 +31,9 @@ beforeEach(async () => {
 test('unique identifier is id', async () => {
 
   const newBlog = {
-    title: "ID Test Blog",
-    author: "Tester",
-    url: "http://www.test.com",
+    title: 'ID Test Blog',
+    author: 'Tester',
+    url: 'http://www.test.com',
     likes: 1
   }
 

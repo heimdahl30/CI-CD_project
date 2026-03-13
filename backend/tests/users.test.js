@@ -6,85 +6,85 @@ const app = require('../src/app')
 const api = supertest(app)
 
 test('invalid password will not be accepted', async () => {
-    const originalUser = await api.get('/api/users')
-    const originalUserLength = originalUser.body.length
+  const originalUser = await api.get('/api/users')
+  const originalUserLength = originalUser.body.length
 
-    let user = {
-        username: "rabbit",
-        name: "Jojo",
-    }
+  let user = {
+    username: 'rabbit',
+    name: 'Jojo',
+  }
 
-    const response = await api
-        .post('/api/users')
-        .send(user)
-        .expect(400)
+  const response = await api
+    .post('/api/users')
+    .send(user)
+    .expect(400)
 
-    const finalUser = await api.get('/api/users')
-    const finalUserLength = finalUser.body.length
+  const finalUser = await api.get('/api/users')
+  const finalUserLength = finalUser.body.length
 
-    assert.strictEqual(finalUserLength, originalUserLength)
-    assert(response.body.error.includes('password is too short or missing'))
+  assert.strictEqual(finalUserLength, originalUserLength)
+  assert(response.body.error.includes('password is too short or missing'))
 
 })
 
 test('invalid username will not be accepted', async () => {
-    const originalUser = await api.get('/api/users')
-    const originalUserLength = originalUser.body.length
+  const originalUser = await api.get('/api/users')
+  const originalUserLength = originalUser.body.length
 
-    let user = {
-        username: "ra",
-        name: "Jojo",
-        password: "123456yhn"
-    }
+  let user = {
+    username: 'ra',
+    name: 'Jojo',
+    password: '123456yhn'
+  }
 
-    const response = await api
-        .post('/api/users')
-        .send(user)
-        .expect(400)
+  const response = await api
+    .post('/api/users')
+    .send(user)
+    .expect(400)
 
-    const finalUser = await api.get('/api/users')
-    const finalUserLength = finalUser.body.length
+  const finalUser = await api.get('/api/users')
+  const finalUserLength = finalUser.body.length
 
-    assert.strictEqual(finalUserLength, originalUserLength)
-    assert(response.body.error.includes("User validation failed:"))
+  assert.strictEqual(finalUserLength, originalUserLength)
+  assert(response.body.error.includes('User validation failed:'))
 
 })
 
 test('duplicate username will not be accepted', async () => {
-    const initialUser = {
-        username: "Paquito",
-        name: "Manny",
-        password: "first-password"
-    }
-    await api
-        .post('/api/users')
-        .send(initialUser)
-        .expect(201)
+  const initialUser = {
+    username: 'Paquito',
+    name: 'Manny',
+    password: 'first-password'
+  }
+  await api
+    .post('/api/users')
+    .send(initialUser)
+    .expect(201)
 
-    const usersAtStart = await api.get('/api/users')
+  const usersAtStart = await api.get('/api/users')
 
-    const duplicateUser = {
-        username: "Paquito",
-        name: "different name",
-        password: "second-password"
-    }
+  const duplicateUser = {
+    username: 'Paquito',
+    name: 'different name',
+    password: 'second-password'
+  }
 
-    console.log('Sending duplicate user...')
+  console.log('Sending duplicate user...')
 
-    const response = await api
-        .post('/api/users')
-        .send(duplicateUser)
-        .timeout(2000)
-        .expect(400)
+  const response = await api
+    .post('/api/users')
+    .send(duplicateUser)
+    .timeout(2000)
+    .expect(400)
 
-    const userAtEnd = await api.get('/api/users')
+  const userAtEnd = await api.get('/api/users')
 
-    assert.strictEqual(usersAtStart.body.length, userAtEnd.body.length)
-    assert.deepStrictEqual(response.body, { "error": "username should be unique" })
+  assert.strictEqual(usersAtStart.body.length, userAtEnd.body.length)
+  assert.deepStrictEqual(response.body, { 'error': 'username should be unique' })
 
 })
 
 
 after(async () => {
-    await mongoose.connection.close()
+  await mongoose.connection.close()
 })

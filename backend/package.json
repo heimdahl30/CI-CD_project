@@ -6,6 +6,7 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development node --watch index.js",
     "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint src/app.js --fix",
     "test": "NODE_ENV=test node --test --test-concurrency=1"
   },
   "keywords": [],
