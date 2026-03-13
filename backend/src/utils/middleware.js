@@ -1,4 +1,4 @@
-// const { JsonWebTokenError } = require('jsonwebtoken')
+const { JsonWebTokenError } = require('jsonwebtoken')
 // random comment
 const logger = require('./logger')
 const jwt = require('jsonwebtoken')
