@@ -7,6 +7,11 @@ module.exports = {
 
     extends: "eslint:recommended",
     rules: {
+        'no-unused-vars': ['error', {
+            'argsIgnorePattern': '^_',
+            'varsIgnorePattern': '^_',
+            'caughtErrorsIgnorePattern': '^_'
+        }],
         indent: ["error", 2],
         "linebreak-style": ["error", "unix"],
         quotes: ["error", "single"],
