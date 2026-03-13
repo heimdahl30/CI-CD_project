@@ -36,14 +36,16 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('LOGIN BUTTON CLICKED')
+    console.log('APP_LOG: Login starting...')
     try {
       const user = await loginService.login({ username, password })
+      console.log('APP_LOG: Login API Success', user)
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       blogService.setToken(user.token)
       console.log('User object from backend:', user)
       console.log('Success')
       setUser(user)
+      console.log('APP_LOG: setUser called')
       setUsername('')
       setPassword('')
     }
