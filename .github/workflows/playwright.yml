@@ -47,6 +47,7 @@ jobs:
     - name: Run Backend Unit Tests
       run: |
         npm ci
+        npm run lint
         npm test
       working-directory: backend
       env:
@@ -59,7 +60,16 @@ jobs:
     - name: Run Frontend Component Tests (Vitest)
       run: |
         npm ci
+        npm run lint
         npm test -- --watch=false # Ensure Vitest doesn't hang in "watch" mode
+      working-directory: frontend
+
+    - name: Build Frontend for E2E
+      run: |
+        npm run build
+        rm -rf ../backend/dist
+        mkdir -p ../backend/dist
+        cp -r dist/* ../backend/dist/
       working-directory: frontend
 
     # 3. Start Backend on port 3003
@@ -75,15 +85,10 @@ jobs:
         NODE_ENV: test
         SECRET: ${{ secrets.SECRET }}
 
-    # 4. Install Frontend & Browsers
-
-    - name: Install & Start Frontend
+    - name: Install Playwright dependencies
       run: |
         npm ci
-      working-directory: frontend
-
-    - name: Install Playwright dependencies
-      run: npm ci
+        npm run lint
       working-directory: frontend/playwright_blogtesting
 
     - name: Install Playwright Browsers
@@ -95,6 +100,8 @@ jobs:
       timeout-minutes: 20
       run: npx playwright test --reporter=list,html --timeout=120000
       working-directory: frontend/playwright_blogtesting
+      env:
+        PLAYWRIGHT_TEST_BASE_URL: http://127.0.0.1:3003
 
     - uses: actions/upload-artifact@v4
       if: always()
