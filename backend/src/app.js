@@ -22,7 +22,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(express.json())
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use(express.static(path.join(__dirname, '..', 'dist')))
 app.use(middleware.tokenExtractor)
 app.use(middleware.requestLogger)
 
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 app.get('/*path', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
 })
 
 app.use(middleware.unknownEndpoint)
