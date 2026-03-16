@@ -6,7 +6,7 @@ set -e
 echo "Building Frontend..."
 cd frontend
 npm install
-npm run build
+./node_modules/.bin/vite build
 cd ..
 
 # 2. Prepare Backend Static Folder
