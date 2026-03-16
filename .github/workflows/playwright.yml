@@ -60,7 +60,7 @@ jobs:
     # 4. Run Frontend Component Tests
     - name: Run Frontend Component Tests (Vitest)
       run: |
-        npm ci
+        npm ci --legacy-peer-deps
         npm run lint
         npm test -- --watch=false # Ensure Vitest doesn't hang in "watch" mode
       working-directory: frontend
