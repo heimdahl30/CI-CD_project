@@ -78,13 +78,13 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
+  /*webServer: {
     command: 'npm run dev -- --host 127.0.0.1',
     timeout: 120 * 1000,
     url: 'http://127.0.0.1:3003',
     cwd: '../',
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI
   },
-
+  */
 })
 
