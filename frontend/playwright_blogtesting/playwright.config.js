@@ -83,7 +83,7 @@ export default defineConfig({
     timeout: 120 * 1000,
     url: 'http://127.0.0.1:3003',
     cwd: '../',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
   },
 
 })
