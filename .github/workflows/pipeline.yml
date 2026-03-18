@@ -122,7 +122,7 @@ jobs:
           uses: JorgeLNJunior/render-deploy@v1.4.4
           with:
             service_id: ${{ secrets.RENDER_SERVICE_ID }}
-            api_key: ${{ secrets.invalid_api_key }}
+            api_key: ${{ secrets.RENDER_API_KEY }}
             wait_deploy: true
 
   notify_success:
@@ -135,16 +135,9 @@ jobs:
             -d '{
               "embeds": [{
               "title": "Deployment Success CI-CD_project",
-              "description": "New version is LIVE!",
+              "description": "**New version is LIVE!**\n**Commit:** `${{ github.sha }}`\n**Author:** ${{ github.actor }}",
               "url": "https://ci-cd-project-jcv7.onrender.com",
-              "color": 65280,
-              "fields": [
-              {
-                "name": "Author",
-                "value": "${{ github.actor }}",
-                "inline": true
-              }
-            ]
+              "color": 65280
             }]
             }' \
             ${{ secrets.DISCORD_WEBHOOK }}
