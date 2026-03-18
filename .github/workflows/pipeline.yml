@@ -122,7 +122,7 @@ jobs:
           uses: JorgeLNJunior/render-deploy@v1.4.4
           with:
             service_id: ${{ secrets.RENDER_SERVICE_ID }}
-            api_key: ${{ secrets.RENDER_API_KEY }}
+            api_key: ${{ secrets.invalid_api_key }}
             wait_deploy: true
 
   notify_success:
@@ -136,7 +136,7 @@ jobs:
               "embeds": [{
               "title": "Deployment Success CI-CD_project",
               "description": "New version is LIVE!",
-              "url": "https://www.abge.com",
+              "url": "https://ci-cd-project-jcv7.onrender.com",
               "color": 65280,
               "fields": [
               {
