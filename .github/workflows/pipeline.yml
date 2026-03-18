@@ -124,3 +124,60 @@ jobs:
             service_id: ${{ secrets.RENDER_SERVICE_ID }}
             api_key: ${{ secrets.RENDER_API_KEY }}
             wait_deploy: true
+
+  notify_success:
+      needs: deploy_to_render
+      runs-on: ubuntu-latest
+      steps:
+        - name: Notify Discord Success
+          run: |
+            curl -H "Content-Type: application/json" \
+            -d '{
+              "embeds": [{
+              "title": "Deployment Success CI-CD_project",
+              "description": "New version is LIVE!",
+              "url": "https://ci-cd-project-jcv7.onrender.com",
+              "color": 65280,
+              "fields": [
+              {
+                "name": "Author",
+                "value": "${{ github.actor }}",
+                "inline": true
+              }
+            ]
+            }]
+            }' \
+            ${{ secrets.DISCORD_WEBHOOK }}
+
+  notify_failure:
+      needs: deploy_to_render
+      runs-on: ubuntu-latest
+      if: failure()
+      steps:
+        - name: Notify Discord Failure
+          run: |
+            curl -H "Content-Type: application/json" \
+            -d '{
+              "embeds": [{
+              "title": "Build Failed",
+              "description": "**Commit:** `${{ github.sha }}`\n**Author:** ${{ github.actor }}\n**Logs:** [View here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
+              "color": 16711680
+            }]
+            }' \
+            ${{ secrets.DISCORD_WEBHOOK }}
+
+  tag_release:
+    needs: deploy_to_render
+    if: |
+        github.event_name == 'push' && !
+        contains(join(github.event.commits.*.message, ' '), '#skip')
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v4
+         with:
+           fetch-depth: 0
+       - name: Bump version and push tag
+         uses: anothrNick/github-tag-action@1.75.0
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           DEFAULT_BUMP: patch
