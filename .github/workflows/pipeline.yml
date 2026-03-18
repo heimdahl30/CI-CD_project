@@ -6,14 +6,14 @@ on:
     paths:
       - 'frontend/**'
       - 'backend/**'
-      - '.github/workflows/playwright.yml'
+      - '.github/workflows/**'
   pull_request:
     branches: [main]
     types: [opened, synchronize]
     paths:
       - 'frontend/**'
       - 'backend/**'
-      - '.github/workflows/playwright.yml'
+      - '.github/workflows/**'
 
 jobs:
   build_and_test:
