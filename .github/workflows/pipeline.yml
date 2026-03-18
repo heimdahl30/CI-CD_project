@@ -136,7 +136,7 @@ jobs:
               "embeds": [{
               "title": "Deployment Success CI-CD_project",
               "description": "New version is LIVE!",
-              "url": "https://ci-cd-project-jcv7.onrender.com",
+              "url": "https://www.abge.com",
               "color": 65280,
               "fields": [
               {
